@@ -12,7 +12,7 @@ def stateInviteAndDownload():
     yesterday = today - oneday   
 
     # print today
-    yesterday = "2015-06-25"
+    # yesterday = "2015-06-25"
 
     mUser = mmysql(_options.db["db_user"])
 
@@ -60,6 +60,9 @@ def stateInviteAndDownload():
 
     mUser = mmysql(_options.db["db_user"])
 
+    wifiNum = 0
+    lockNum = 0
+
     for i in range(0,10): # 获取每个渠道号的用户列表( 此处的渠道号为 红包锁屏的渠道为wifi的 红包wifi(注册或使用)的渠道号)
         
         sql = "select * from app_register_%d  where  uid  in (select uid from app_register_%d  where channel = 'wifi'  and LEFT(rtime,10) = '%s' order by uid  desc) and channel <> 'wifi' " %(i, i, yesterday)
@@ -76,6 +79,16 @@ def stateInviteAndDownload():
 
         for var in res :
             dictUid[ var[6] ].append(str(var[0])) 
+
+
+        sql = "select count(*) from app_register_%d  where appid = 1 and  LEFT(rtime,10) = '%s' order by uid  desc " %(i, yesterday)
+        mUser.Q(sql)
+        wifiNum += mUser.fetchall()[0][0];
+
+        sql = "select count(*) from app_register_%d  where  uid  in (select uid from app_register_%d  where channel = 'wifi'  and LEFT(rtime,10) = '%s' order by uid  desc) and channel <> 'wifi' " %(i, i, yesterday)
+        mUser.Q(sql)
+        lockNum += mUser.fetchall()[0][0];
+
 
     mUser.close()
 
@@ -128,6 +141,11 @@ def stateInviteAndDownload():
 
 
     print 
+
+    print "wifi register num" , wifiNum
+    print  "lock register num" , lockNum
+
+
     for key , val in dictInviteUid.items():
         if val:        
             invite_num =  float(len(val)) / len( dictUid[key] ) * 100    #每百人邀请用户的个数
