@@ -27,6 +27,7 @@ def stateInviteAndDownload():
             tmpLst.append( v[0] )
 
     tmpLst = {}.fromkeys(tmpLst).keys()
+    print "channelList = " , tmpLst 
 
 
     dictUid = {}
@@ -54,6 +55,7 @@ def stateInviteAndDownload():
     deviceLog ="( '" + "' , '".join(deviceLog)  + "' )"
 
     mZhuan.close()
+    print "deviceLog: " , deviceLog
 
 
     mUser = mmysql(_options.db["db_user"])
