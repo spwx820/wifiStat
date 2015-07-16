@@ -54,7 +54,7 @@ def stateInviteAndDownload():
     deviceLog ="( '" + "' , '".join(deviceLog)  + "' )"
 
     mZhuan.close()
-    print "deviceLog: " , deviceLog
+
 
 
     mUser = mmysql(_options.db["db_user"])
@@ -109,7 +109,7 @@ def stateInviteAndDownload():
                     mUser.Q(sql)
                     res = mUser.fetchall();
 
-                    print key , ": " , len(res )
+
 
                     if res:
                         tmpLst = []
@@ -123,7 +123,7 @@ def stateInviteAndDownload():
                     mUser.Q(sql)
                     res = mUser.fetchall();
 
-                    print key , ": " , len(res )
+
 
                     if res:
                         tmpLst = []
