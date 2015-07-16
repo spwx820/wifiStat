@@ -12,7 +12,7 @@ def stateInviteAndDownload():
     yesterday = today - oneday   
 
     # print today
-    yesterday = "2015-06-25"
+    #yesterday = "2015-06-25"
 
     mUser = mmysql(_options.db["db_user"])
 
