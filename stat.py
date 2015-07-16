@@ -88,7 +88,6 @@ def stateInviteAndDownload():
         mUser.Q(sql)
         lockNum += mUser.fetchall()[0][0];
 
-
     mUser.close()
 
     ##############################################
@@ -109,8 +108,6 @@ def stateInviteAndDownload():
                     mUser.Q(sql)
                     res = mUser.fetchall();
 
-
-
                     if res:
                         tmpLst = []
                         for v in res:
@@ -122,8 +119,6 @@ def stateInviteAndDownload():
                                     
                     mUser.Q(sql)
                     res = mUser.fetchall();
-
-
 
                     if res:
                         tmpLst = []
@@ -152,8 +147,9 @@ def stateInviteAndDownload():
   # `user_download_num` int(11) DEFAULT NULL COMMENT ' 昨日wifi渠道lock新增用户有下载行为的用户数
 
 
-    lock_num = len( dictUid[key] )  
+    
     for key , val in dictInviteUid.items():
+        lock_num = len( dictUid[key] )  
         if val: 
 
             invite_num = len(val)
