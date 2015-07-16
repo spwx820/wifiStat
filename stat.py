@@ -12,7 +12,7 @@ def stateInviteAndDownload():
     yesterday = today - oneday   
 
     # print today
-    # yesterday = "2015-06-25"
+    yesterday = "2015-06-25"
 
     mUser = mmysql(_options.db["db_user"])
 
@@ -145,31 +145,49 @@ def stateInviteAndDownload():
     print  "lock register num" , lockNum
 
 
+  # `lock_num` int(11) DEFAULT NULL COMMENT '昨日wifi渠道lock新增用户总数',
+  # `invite_num` int(11) DEFAULT NULL COMMENT '昨日wifi渠道lock新增用户邀请总量',
+  # `user_invite_num` int(11) DEFAULT NULL COMMENT '昨日wifi渠道lock新增用户中有邀请行为的用户数',
+  # `download_num` int(11) DEFAULT NULL COMMENT '昨日wifi渠道lock新增用户下载广告的总量',
+  # `user_download_num` int(11) DEFAULT NULL COMMENT ' 昨日wifi渠道lock新增用户有下载行为的用户数
+
+
+    lock_num = len( dictUid[key] )  
     for key , val in dictInviteUid.items():
-        if val:        
-            invite_num =  float(len(val)) / len( dictUid[key] ) * 100    #每百人邀请用户的个数
-            invite_rate = float(len({}.fromkeys(val).keys()  )) / len( dictUid[key] )     #有邀请行为的用户比例
+        if val: 
+
+            invite_num = len(val)
+            user_invite_num = en({}.fromkeys(val).keys() ) 
+
+            num =  float(invite_num) /  lock_num* 100    #每百人邀请用户的个数
+            rate = float( user_invite_num ) / lock_num     #有邀请行为的用户比例
             print "每百人邀请用户的个数", key, invite_num
             print  "有邀请行为的用户比例", key,  invite_rate
             print 
 
-            sql = "update analytics_user_active set  invite_num = %d, invite_rate = %f    where channel = '%s'  and cdate = '%s' " %( invite_num, invite_rate,  key , yesterday)
+            sql = "update analytics_user_active set  lock_num = %d, invite_num = %d , user_invite_num = %d   where channel = '%s'  and cdate = '%s' " %( len( dictUid[key] ), len(val) ,  len({}.fromkeys(val).keys() ) , key , yesterday)
             mWifi.Q(sql)
 
     print 
     for key , val in dictDownloadUid.items():
         if val:        
-            download_num = float(len(val)) / len( dictUid[key] ) * 100    #每百人下载CPA个数
-            download_rate =  float(len({}.fromkeys(val).keys()  )) / len( dictUid[key] )     #有下载行为的用户比例
-            print "每百人下载CPA个数", key,  download_num
-            print  "有下载行为的用户比例", key, download_rate
-            print 
 
-            sql = "update analytics_user_active set  download_num = %d, download_rate =%f     where channel = '%s'  and cdate = '%s' " %(  download_num, download_rate , key , yesterday)
+            download_num = len(val)
+            user_download_num = en({}.fromkeys(val).keys() ) 
+
+            num =  float(download_num) /  lock_num* 100    #每百人xiazai ad的个数
+            rate = float( user_download_num ) / lock_num     #有xiazai行为的用户比例
+
+            print "每百人下载CPA个数", key,  download_num
+            print  "有下载行为的用户比例", key, download_rate             
+            
+            sql = "update analytics_user_active set  download_num = %d, user_download_num = %d  where channel = '%s'  and cdate = '%s' " %(  len(val) ,  len({}.fromkeys(val).keys() ) , key , yesterday)
+            print sql
             mWifi.Q(sql)
 
 
     mWifi.close()
 
+if __name__ == '__main__':
 
-stateInviteAndDownload()
+    stateInviteAndDownload()
