@@ -27,8 +27,7 @@ def stateInviteAndDownload():
             tmpLst.append( v[0] )
 
     tmpLst = {}.fromkeys(tmpLst).keys()
-    print "channelList = " , tmpLst 
-
+    print "channelList = " , tmpLst
 
     dictUid = {}
     dictInviteUid = {}
@@ -156,7 +155,6 @@ def stateInviteAndDownload():
 
             sql = "update analytics_user_active set  invite_num = %d, invite_rate = %f    where channel = '%s'  and cdate = '%s' " %( invite_num, invite_rate,  key , yesterday)
             mWifi.Q(sql)
-
 
     print 
     for key , val in dictDownloadUid.items():
