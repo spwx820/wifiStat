@@ -157,12 +157,12 @@ def stateInviteAndDownload():
         if val: 
 
             invite_num = len(val)
-            user_invite_num = en({}.fromkeys(val).keys() ) 
+            user_invite_num = len({}.fromkeys(val).keys() ) 
 
             num =  float(invite_num) /  lock_num* 100    #每百人邀请用户的个数
             rate = float( user_invite_num ) / lock_num     #有邀请行为的用户比例
-            print "每百人邀请用户的个数", key, invite_num
-            print  "有邀请行为的用户比例", key,  invite_rate
+            print "每百人邀请用户的个数", key, num
+            print  "有邀请行为的用户比例", key,  rate
             print 
 
             sql = "update analytics_user_active set  lock_num = %d, invite_num = %d , user_invite_num = %d   where channel = '%s'  and cdate = '%s' " %( len( dictUid[key] ), len(val) ,  len({}.fromkeys(val).keys() ) , key , yesterday)
@@ -173,13 +173,13 @@ def stateInviteAndDownload():
         if val:        
 
             download_num = len(val)
-            user_download_num = en({}.fromkeys(val).keys() ) 
+            user_download_num = len({}.fromkeys(val).keys() ) 
 
             num =  float(download_num) /  lock_num* 100    #每百人xiazai ad的个数
             rate = float( user_download_num ) / lock_num     #有xiazai行为的用户比例
 
-            print "每百人下载CPA个数", key,  download_num
-            print  "有下载行为的用户比例", key, download_rate             
+            print "每百人下载CPA个数", key,  num
+            print  "有下载行为的用户比例", key, rate             
             
             sql = "update analytics_user_active set  download_num = %d, user_download_num = %d  where channel = '%s'  and cdate = '%s' " %(  len(val) ,  len({}.fromkeys(val).keys() ) , key , yesterday)
             print sql
