@@ -166,6 +166,7 @@ def stateInviteAndDownload():
 
     print 
     for key , val in dictDownloadUid.items():
+        lock_num = len( dictUid[key] )        
         if val:        
 
             download_num = len(val)
